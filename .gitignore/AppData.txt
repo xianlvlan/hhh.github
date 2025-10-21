@@ -1,0 +1,3 @@
+AppData/
+Local/AMD/
+.vscode/extensions/ritwickdey.liveserver-*

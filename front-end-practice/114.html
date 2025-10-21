@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>沈星回老婆 注册页</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0; /* 修复此处缺少的分号 */
+      font-family: "Microsoft Yahei", sans-serif;
+      background: url("shenxinghui.jpg") no-repeat center center fixed; /* 修复url后多余的空格 */
+      background-size: cover;
+    }
+
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(248, 204, 212, 0.8);
+      padding: 10px 0;
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    .navbar .logo {
+      font-size: 20px;
+      font-weight: bold;
+      color: #ff6b6b;
+    }
+    .navbar a {
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+    }
+    .form-container {
+      max-width: 500px;
+      margin: 100px auto; /* 调整margin-top，避免被导航栏遮挡 */
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 10px;
+      padding: 30px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    .form-container h2 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 20px;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      color: #666;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 8px;
+      border: 2px solid #ff6b6b;
+      border-radius: 5px;
+      box-sizing: border-box;
+      background: rgba(255, 255, 255, 0.2);
+    }
+    .gender-group {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .gender-option {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .btn-group {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 20px;
+    }
+    .btn {
+      padding: 8px 20px;
+      background: #ff6b6b;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .btn:hover {
+      background: #ff4d4d;
+    }
+
+    .footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(255, 107, 107, 0.8);
+      color: #fff;
+      text-align: center;
+      padding: 10px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="navbar">
+    <div class="logo">小王妃</div>
+    <a href=" ">首页</a > <!-- 修复a标签中多余的空格和符号 -->
+    <a href="#">角色介绍</a >
+    <a href="#">登录</a >
+  </div>
+
+  <div class="form-container">
+    <h2>注册信息</h2>
+    <div class="form-group">
+      <label>昵称：</label>
+      <input type="text" placeholder="请输入您的昵称" />
+    </div>
+    <div class="form-group">
+      <label>密码：</label>
+      <input type="password" placeholder="请输入您的密码" />
+    </div>
+    <div class="form-group">
+      <label>邮箱：</label>
+      <input type="email" placeholder="请输入您的邮箱" />
+    </div>
+    <div class="form-group">
+      <label>性别：</label>
+      <div class="gender-group">
+        <div class="gender-option">
+          <input type="radio" name="gender" id="male" />
+          <label for="male">男</label>
+        </div>
+        <div class="gender-option">
+          <input type="radio" name="gender" id="female" />
+          <label for="female">女</label>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>爱好：</label>
+      <select>
+        <option>旅游</option>
+        <option>阅读</option>
+        <option>绘画</option>
+        <option>音乐</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>个人留言：</label>
+      <textarea rows="3" placeholder="请输入您的留言"></textarea>
+    </div>
+    <div class="btn-group">
+      <button class="btn">注册</button> <!-- 调整按钮文字，更符合场景 -->
+      <button class="btn" type="reset">重置信息</button> <!-- 明确重置类型 -->
+    </div>
+  </div>
+
+  <div class="footer">
+    Copyright @ 李雨欣 <!-- 修复拼写错误 -->
+  </div>
+<script>
+  // 给注册按钮绑定点击事件
+  document.querySelector('.btn-group button:first-child').addEventListener('click', function() {
+    // 1. 获取表单数据
+    const username = document.querySelector('input[placeholder="请输入您的昵称"]').value;
+    const password = document.querySelector('input[type="password"]').value;
+    const email = document.querySelector('input[type="email"]').value;
+
+    // 2. 简单验证
+    if (!username || !password || !email) {
+      alert('昵称、密码、邮箱不能为空！');
+      return;
+    }
+
+    // 3. 调用后端接口
+    fetch('http://127.0.0.1:5000/api/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ username, password, email })
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.code === 200) {
+        alert('注册成功！');
+        // 可在此处添加页面跳转逻辑，如跳转到登录页
+      } else {
+        alert(data.message || '注册失败，请稍后再试');
+      }
+    })
+    .catch(error => {
+      alert('网络错误：' + error);
+    });
+  });
+</script>
+</body>
+</html>
